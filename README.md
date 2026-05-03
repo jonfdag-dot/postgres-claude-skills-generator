@@ -18,11 +18,6 @@
   <em>Free to generate · read-only Postgres · 2-minute compile</em>
 </p>
 
-<!-- Demo video — GitHub user-attachments URL renders natively on github.com README. -->
-<video src="https://github.com/user-attachments/assets/750c0698-9e0d-4dff-a7e9-de02daed00ca" controls muted loop playsinline width="100%"></video>
-
-<br/>
-
 <!-- Primary row — brand + founder credibility -->
 <p>
   <a href="https://chion.ai">
