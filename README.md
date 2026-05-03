@@ -6,15 +6,14 @@
   <sub><strong>POSTGRES&nbsp;SQL&nbsp;SKILLS&nbsp;·&nbsp;FREE&nbsp;GENERATOR</strong></sub>
 </p>
 
-<h1>Chion Skills Generator for Postgres SQL Database</h1>
+<h1>Postgres SQL Skills Generator for Claude Code, Codex &amp; Cursor</h1>
 
 <p>
-  <strong>Ask a question. Cite the SQL.</strong>
+  <strong>Generate verified Postgres SQL skills for Claude Code, Codex, and Cursor — auto-distilled from queries your team already trusts. Free, MIT-licensed, deterministic.</strong>
 </p>
 
 <p>
-  Your company's analytics agent — auto-generated from the verified queries your team already trusts.<br/>
-  One Postgres connection. One compile pass. One folder any AI tool can read.
+  <strong>Auto-generated Postgres SQL skills for Claude Code, Codex, and Cursor.</strong> Your company's analytics agent — built from the verified SQL queries your team already trusts. One Postgres connection. One compile pass. One folder any AI tool reads to answer business questions with audit-grade SQL.
 </p>
 
 <p>
@@ -79,6 +78,31 @@ Every company hits the same wall with AI analytics: the model writes SQL that *l
 **Chion fixes this once.** Your team verifies questions against your own database — not synthetic data, not a demo. Each verified question becomes a canonical SQL script. The framework organizes those scripts by department, role, and analytical pattern. The result is a single folder your AI tools read at every question — and the answer cites the exact verified script that produced it.
 
 The more your team verifies, the sharper the agent gets. Crowdsourced inside one company. Compiled deterministically. Versioned like code.
+
+---
+
+## Features
+
+- 🤖 **Auto-generated Claude Skills** — Verified Postgres queries auto-distill into reusable skills tagged by department and role.
+- 🔒 **Read-only, RLS-aware** — SELECT-only validator + Row-Level Security honored end-to-end.
+- 📜 **Verified, executable SQL** — Each skill ships as `{README.md, query.sql}`; the SQL is the single source of truth.
+- 🧠 **Three-tier semantic cascade** — `workspace → department → role/SKILL.md` — the same shape native Claude skill discovery walks.
+- 🔁 **Deterministic compile** — Same input → byte-identical export. Diff agent files across releases the same way you diff code.
+- 🪶 **Drop-in for any agent stack** — Symlink `CHION.md` to `CLAUDE.md`, `AGENTS.md`, or `.cursor/rules/*.mdc`. One source of truth, no drift.
+- 📊 **13-phase audit trail** — Every answer cites the verified script that produced it; no hallucinated summaries.
+- 🛡️ **MIT licensed, open-source** — Fork freely; no per-seat license.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Database | PostgreSQL 15+ (any standard-Postgres dialect) |
+| Hosted Postgres | AWS RDS · Azure Database for PostgreSQL · Google Cloud SQL · Neon · Supabase |
+| Skill format | Markdown (`SKILL.md`) + verified SQL (`query.sql`) — Anthropic Claude Skills convention |
+| AI tools | Claude Code · OpenAI Codex · Cursor · any agent reading root agent files |
+| License | MIT |
 
 ---
 
@@ -154,16 +178,28 @@ One source of truth, no drift between mirrors. The skill cascade beneath `.claud
 
 ---
 
-## Quick start
+## Installation
+
+Clone the workspace and wire it into your AI tool:
 
 ```bash
+# 1. Clone the Postgres SQL skills workspace
 git clone https://github.com/jonfdag-dot/postgres-claude-skills-generator.git
-cp -r postgres-claude-skills-generator/. /path/to/your/repo/
 cd postgres-claude-skills-generator
-ln -s CHION.md CLAUDE.md     # or AGENTS.md, or copy to .cursorrules / .cursor/rules/
+
+# 2. Drop into your project
+cp -r . /path/to/your/repo/
+
+# 3. Wire your AI tool to read CHION.md
+ln -s CHION.md CLAUDE.md     # for Claude Code
+ln -s CHION.md AGENTS.md     # for OpenAI Codex
+cp CHION.md .cursorrules     # for Cursor (legacy)
+mkdir -p .cursor/rules && cp CHION.md .cursor/rules/chion.mdc  # for Cursor (modern)
 ```
 
-That's it. Open a question in your AI tool — it reads `CHION.md`, walks the cascade, picks the verified script, wraps it, executes, returns the answer with the source path cited.
+That's it. Open a question in your AI tool — it reads `CHION.md`, walks the cascade, picks the verified Claude Skill, wraps it as a CTE, executes, and returns the answer with the source path cited.
+
+> 💡 **Want this generated for your database?** [chion.ai/chion-md](https://chion.ai/chion-md) — connect Postgres, verify questions, export your skills.
 
 ---
 
@@ -231,23 +267,22 @@ This Northwind workspace is a mock of the **team / admin** tier — six analyst 
 
 ---
 
-## Resources
+## Documentation
 
-**Chion**
-- [chion.ai](https://chion.ai) — Product overview
-- [chion.ai/chion-md](https://chion.ai/chion-md) — Generate your workspace
-- [chion.ai/contact](https://chion.ai/contact) — Talk to the team
+**Product**
+- 📖 [How it works](https://chion.ai/how-it-works) — The 13-phase deterministic pipeline (auto-profile · ask + route + generate · execute + chart + narrate)
+- 🤖 [Generate your workspace](https://chion.ai/chion-md) — Connect Postgres, verify queries, export
+- 🔒 [Trust & Security](https://chion.ai/trust) — Read-only enforcement, RLS, audit log
+- 💰 [Pricing](https://chion.ai/pricing) — Free trial, no credit card
 
-**Follow**
-- [LinkedIn (company)](https://www.linkedin.com/company/chion-ai)
-- [X / Twitter](https://twitter.com/chionanalytics)
-- [YouTube](https://www.youtube.com/@chionai)
-- [Jonathan Dag — Founder](https://www.linkedin.com/in/jonathan-dag/)
+**Database integrations**
+- [PostgreSQL hub](https://chion.ai/integrations/postgresql) · [AWS RDS](https://chion.ai/integrations/postgresql/aws-rds) · [Azure](https://chion.ai/integrations/postgresql/azure) · [GCP](https://chion.ai/integrations/postgresql/gcp) · [Neon](https://chion.ai/integrations/postgresql/neon) · [Supabase](https://chion.ai/integrations/postgresql/supabase)
 
 **Related ecosystems**
-- [Anthropic — Claude Skills overview](https://www.anthropic.com/news/skills)
-- [Anthropic skills repository](https://github.com/anthropics/skills)
-- [Cursor rules documentation](https://docs.cursor.com/context/rules)
+- [Anthropic — Claude Skills overview](https://www.anthropic.com/news/skills) · [Anthropic skills repository](https://github.com/anthropics/skills) · [Cursor rules documentation](https://docs.cursor.com/context/rules)
+
+**Follow**
+- [LinkedIn (company)](https://www.linkedin.com/company/chion-ai) · [X / Twitter](https://twitter.com/chionanalytics) · [YouTube](https://www.youtube.com/@chionai) · [Jonathan Dag — Founder](https://www.linkedin.com/in/jonathan-dag/)
 
 ---
 
