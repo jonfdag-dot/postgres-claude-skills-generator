@@ -25,12 +25,19 @@
 
 <br/>
 
-<!-- Single social row — always-render shields.io badges -->
+<!-- Primary row — brand + founder credibility -->
 <p>
   <a href="https://chion.ai">
     <img src="https://img.shields.io/badge/Visit-chion.ai-c97d4a?style=for-the-badge&logo=postgresql&logoColor=white" alt="Visit chion.ai" />
   </a>
   &nbsp;
+  <a href="https://www.linkedin.com/in/jonathan-dag/">
+    <img src="https://img.shields.io/badge/Founder-Jonathan%20Dag-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Founder — Jonathan Dag" />
+  </a>
+</p>
+
+<!-- Secondary row — social platforms -->
+<p>
   <a href="https://www.linkedin.com/company/chion-ai">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
@@ -41,10 +48,6 @@
   &nbsp;
   <a href="https://www.youtube.com/@chionai">
     <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube" />
-  </a>
-  &nbsp;
-  <a href="https://www.linkedin.com/in/jonathan-dag/">
-    <img src="https://img.shields.io/badge/Founder-Jonathan%20Dag-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Founder — Jonathan Dag" />
   </a>
 </p>
 
