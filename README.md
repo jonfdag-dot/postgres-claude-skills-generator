@@ -18,19 +18,6 @@
   <em>Free to generate · read-only Postgres · 2-minute compile</em>
 </p>
 
-<details>
-<summary><strong>Quick install</strong> — clone, drop in, symlink</summary>
-
-```bash
-git clone https://github.com/jonfdag-dot/postgres-claude-skills-generator.git
-cd postgres-claude-skills-generator && cp -r . /path/to/your/repo/
-ln -s CHION.md CLAUDE.md     # or AGENTS.md (Codex) · cp to .cursor/rules/chion.mdc (Cursor)
-```
-
-</details>
-
-<br/>
-
 <!-- Demo video — drop-in for chion.ai-deployed README; on github.com replace src with a user-attachments/assets/* URL by drag-dropping the .mov into a GitHub Issue/PR comment. -->
 <video src="https://chion.ai/assets/skills-demo.mov" controls muted loop playsinline width="100%"></video>
 
@@ -323,9 +310,11 @@ For commercial questions, reach out at [chion.ai/contact](https://chion.ai/conta
 
 Three layers of defense, all enforced in code (not LLM instructions):
 
-- **L1 — read-only SELECT validator.** Any non-SELECT statement (`INSERT`, `UPDATE`, `DELETE`, `DROP`, `TRUNCATE`, `ALTER`, `GRANT`, `REVOKE`, `MERGE`, `COPY`) is rejected before the query reaches your database.
-- **L2 — schema-contract validator.** Every column referenced in the generated SQL must exist in your live schema. Hallucinated columns and out-of-scope tables are rejected at parse time, before execution.
-- **L3 — runtime caps.** Every query is wrapped with `LIMIT` (≤1,000 rows / 12,000 cells) and a `statement_timeout`. The pipeline coarsens grain or applies TopK before silently truncating.
+- **L1 — read-only SELECT assertion.** A single SELECT is required; comments are stripped; multi-statement and DDL are rejected before the query is sent.
+- **L2 — forbidden-keyword regex.** Any statement matching `INSERT`, `UPDATE`, `DELETE`, `MERGE`, `CREATE`, `DROP`, `TRUNCATE`, `ALTER`, `GRANT`, `REVOKE`, `COPY`, or `INTO` is rejected at parse time.
+- **L3 — `statement_timeout` + `LIMIT` wrap.** Every executed query is wrapped in an outer LIMIT subquery (≤1,000 rows / 12,000 cells) with a Postgres `statement_timeout`. The pipeline coarsens grain or applies TopK before silently truncating.
+
+Hallucinated columns are blocked separately at the **typed-SQL-contract** stage (pipeline phase 8): every column reference in the generated SQL must exist in your live schema and be permitted by the contract. Out-of-contract references are rejected before execution.
 
 The verified SQL script (`query.sql`) is itself canonical — the agent wraps it as `WITH base AS (…)` and never mutates it. New filters and aggregations layer on the secondary query, never inside the verified base.
 
@@ -354,16 +343,16 @@ PgBouncer (transaction or session mode) and other connection poolers are support
 
 <br/>
 
-Two steps:
+The canonical path is through **Chion Studio** at [chion.ai](https://chion.ai/chion-md):
 
-1. Create the folder: `.claude/skills/<department>/<role>/scripts/<skill-id>/`
-2. Drop two files into it:
-   - `query.sql` — the verified read-only SELECT (canonical, never mutated at runtime)
-   - `README.md` — the semantic layer (business question, result table, dos/don'ts, per-column details, value samples)
+1. Open Studio and either **upload your existing query log** or **ask analytics questions in plain English** against your connected Postgres database.
+2. **Verify the answers** you trust. Each verified question becomes a candidate skill; after two instances of the same pattern, the semantic pipeline auto-promotes it to a reusable skill.
+3. **Re-run the skills export** from Studio's admin page. Chion regenerates the workspace folder with the new verified skill placed under the matching `<department>/<role>/scripts/<skill-id>/` folder, with `query.sql` and `README.md` produced by the three-pass deterministic compile.
+4. Drop the refreshed export into your repo (or `git pull` if you've checked it in).
 
-Re-export from Chion Studio after verification, OR hand-edit the folder and the role's `SKILL.md` Scripts Index will pick up the new skill on the next agent load. Both paths produce identical structure.
+The compile is deterministic — same input + same database state produces byte-identical output. Diff agent files across releases the same way you diff code.
 
-For production teams: use [chion.ai/chion-md](https://chion.ai/chion-md) — Chion auto-generates skills from your verified questions. The semantic pipeline distills queries into the same folder shape.
+> **Hand-editing the folder is possible** but not the supported path — Studio is the source of truth for skill verification and the metadata fields (`metric_behavior`, `chosen_primitives`, `trigger_keywords`, `tables_read`) that drive routing.
 
 </details>
 
@@ -388,9 +377,17 @@ The skill cascade beneath `.claude/skills/` is navigated by `CHION.md`'s manual 
 
 <br/>
 
-No. This repository is MIT-licensed and free to use, fork, modify, and ship in commercial products. The published mock (Northwind Logistics) demonstrates the export shape; you can hand-edit it or generate your own from your database via [chion.ai/chion-md](https://chion.ai/chion-md).
+**This repository is MIT-licensed** — free to use, fork, modify, and ship in commercial products. The published mock (Northwind Logistics) demonstrates the export shape and the `CHION.md` agent contract.
 
-Chion's paid tiers are for the *generation* service — connecting to your live Postgres, running the semantic pipeline, and auto-promoting verified queries. The output (this folder shape) is open. If you want to hand-author skills following the same convention, that's free forever.
+To **generate your own** workspace from your live Postgres database, Chion offers:
+
+- **10-day free trial** — no credit card. Connect Postgres, ask questions, verify answers, export.
+- **Starter** — $29/mo (50 verified questions/month)
+- **Pro** — $99/mo (250 verified questions/month)
+- **Max** — $299/mo (750 verified questions/month)
+- **Enterprise** — custom; multi-employee tree, leader-review page, per-role table whitelists
+
+The *generation service* is what the paid tiers cover — connecting to your live database, running the semantic pipeline, auto-promoting verified queries. The *output format* (this folder shape, `CHION.md`, `SKILL.md`) is open. Hand-authoring skills in the same convention is free forever.
 
 </details>
 
