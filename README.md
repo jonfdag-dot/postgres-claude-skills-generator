@@ -9,6 +9,10 @@
 
 <br/><br/>
 
+<p>
+  <sub><strong>POSTGRES&nbsp;SQL&nbsp;SKILLS&nbsp;·&nbsp;FREE&nbsp;GENERATOR</strong></sub>
+</p>
+
 <h1>Chion Skills Workspace</h1>
 
 <p>
@@ -20,14 +24,20 @@
   One Postgres connection. One compile pass. One folder any AI tool can read.
 </p>
 
+<p>
+  <a href="https://chion.ai/chion-md"><strong>Generate your skills file&nbsp;→</strong></a>
+  &nbsp;·&nbsp;
+  <em>Free to generate · read-only Postgres · 2-minute compile</em>
+</p>
+
 <br/>
 
 <p>
-  <a href="https://chion.ai/chion-md"><strong>Generate yours&nbsp;→</strong></a>
-  &nbsp;·&nbsp;
   <a href="https://chion.ai">chion.ai</a>
   &nbsp;·&nbsp;
   <a href="https://chion.ai/contact">Talk to us</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/jonfdag-dot/postgres-claude-skills-generator">GitHub</a>
   &nbsp;·&nbsp;
   <a href="LICENSE">MIT License</a>
 </p>
@@ -68,7 +78,7 @@
 
 <p>
   <sub>
-    <strong>One folder</strong> &nbsp;·&nbsp; <strong>Postgres + any agent stack</strong> &nbsp;·&nbsp; <strong>2-minute compile, no credit card</strong>
+    <strong>Free to generate</strong> &nbsp;·&nbsp; <strong>Read-only Postgres</strong> &nbsp;·&nbsp; <strong>One folder, any agent stack</strong> &nbsp;·&nbsp; <strong>Deterministic 2-minute compile</strong>
   </sub>
 </p>
 
