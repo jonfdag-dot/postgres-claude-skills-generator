@@ -6,14 +6,10 @@
   <sub><strong>POSTGRES&nbsp;SQL&nbsp;SKILLS&nbsp;·&nbsp;FREE&nbsp;GENERATOR</strong></sub>
 </p>
 
-<h1>Postgres SQL Skills Generator for Claude Code, Codex &amp; Cursor</h1>
+<h1>Postgres SQL Agent Skills for Claude Code, Cursor &amp; Codex — Verified, Auditable, Open Source</h1>
 
 <p>
-  <strong>Generate verified Postgres SQL skills for Claude Code, Codex, and Cursor — auto-distilled from queries your team already trusts. Free, MIT-licensed, deterministic.</strong>
-</p>
-
-<p>
-  <strong>Auto-generated Postgres SQL skills for Claude Code, Codex, and Cursor.</strong> Your company's analytics agent — built from the verified SQL queries your team already trusts. One Postgres connection. One compile pass. One folder any AI tool reads to answer business questions with audit-grade SQL.
+  <strong>Automatically generate verified Postgres SQL skills that prevent AI hallucinations in Claude Code, Cursor, and Codex. This workspace converts trusted queries into auditable, RLS-aware agent skills — free, MIT-licensed, deterministic.</strong>
 </p>
 
 <p>
@@ -21,6 +17,22 @@
   &nbsp;·&nbsp;
   <em>Free to generate · read-only Postgres · 2-minute compile</em>
 </p>
+
+<details>
+<summary><strong>Quick install</strong> — clone, drop in, symlink</summary>
+
+```bash
+git clone https://github.com/jonfdag-dot/postgres-claude-skills-generator.git
+cd postgres-claude-skills-generator && cp -r . /path/to/your/repo/
+ln -s CHION.md CLAUDE.md     # or AGENTS.md (Codex) · cp to .cursor/rules/chion.mdc (Cursor)
+```
+
+</details>
+
+<br/>
+
+<!-- Demo video — drop-in for chion.ai-deployed README; on github.com replace src with a user-attachments/assets/* URL by drag-dropping the .mov into a GitHub Issue/PR comment. -->
+<video src="https://chion.ai/assets/skills-demo.mov" controls muted loop playsinline width="100%"></video>
 
 <br/>
 
@@ -83,14 +95,16 @@ The more your team verifies, the sharper the agent gets. Crowdsourced inside one
 
 ## Features
 
-- 🤖 **Auto-generated Claude Skills** — Verified Postgres queries auto-distill into reusable skills tagged by department and role.
-- 🔒 **Read-only, RLS-aware** — SELECT-only validator + Row-Level Security honored end-to-end.
-- 📜 **Verified, executable SQL** — Each skill ships as `{README.md, query.sql}`; the SQL is the single source of truth.
-- 🧠 **Three-tier semantic cascade** — `workspace → department → role/SKILL.md` — the same shape native Claude skill discovery walks.
-- 🔁 **Deterministic compile** — Same input → byte-identical export. Diff agent files across releases the same way you diff code.
-- 🪶 **Drop-in for any agent stack** — Symlink `CHION.md` to `CLAUDE.md`, `AGENTS.md`, or `.cursor/rules/*.mdc`. One source of truth, no drift.
-- 📊 **13-phase audit trail** — Every answer cites the verified script that produced it; no hallucinated summaries.
-- 🛡️ **MIT licensed, open-source** — Fork freely; no per-seat license.
+| Feature | Benefit |
+|---|---|
+| 🤖 **Auto-generated Claude Skills** | Verified Postgres queries auto-distill into reusable skills, tagged by department and role. |
+| 🔒 **Read-only, RLS-aware** | SELECT-only validator and PostgreSQL Row-Level Security honored end-to-end. Nothing in this folder mutates data. |
+| 📜 **Verified, executable SQL** | Each skill ships as `{README.md, query.sql}`. The SQL file is the single source of truth — read it, copy it, run it in psql. |
+| 🧠 **Three-tier semantic cascade** | `workspace → department → role/SKILL.md` matches native Claude skill discovery. CHION.md routes between them. |
+| 🔁 **Deterministic compile** | Same input → byte-identical export. Diff agent files across releases the same way you diff code. |
+| 🪶 **Drop-in for any agent stack** | Symlink `CHION.md` to `CLAUDE.md`, `AGENTS.md`, or `.cursor/rules/*.mdc`. One source of truth, no drift. |
+| 📊 **13-phase audit trail** | Every answer cites the verified script that produced it. No hallucinated summaries — every figure traces to a row. |
+| 🛡️ **MIT licensed, open-source** | Fork freely; no per-seat license; commercial use permitted. |
 
 ---
 
@@ -297,6 +311,133 @@ What we welcome from the community:
 - Suggestions for analytical patterns Chion's primitive library does not yet cover
 
 For commercial questions, reach out at [chion.ai/contact](https://chion.ai/contact).
+
+---
+
+## FAQ
+
+<details>
+<summary><strong>How does this prevent SQL injection or hallucinated columns?</strong></summary>
+
+<br/>
+
+Three layers of defense, all enforced in code (not LLM instructions):
+
+- **L1 — read-only SELECT validator.** Any non-SELECT statement (`INSERT`, `UPDATE`, `DELETE`, `DROP`, `TRUNCATE`, `ALTER`, `GRANT`, `REVOKE`, `MERGE`, `COPY`) is rejected before the query reaches your database.
+- **L2 — schema-contract validator.** Every column referenced in the generated SQL must exist in your live schema. Hallucinated columns and out-of-scope tables are rejected at parse time, before execution.
+- **L3 — runtime caps.** Every query is wrapped with `LIMIT` (≤1,000 rows / 12,000 cells) and a `statement_timeout`. The pipeline coarsens grain or applies TopK before silently truncating.
+
+The verified SQL script (`query.sql`) is itself canonical — the agent wraps it as `WITH base AS (…)` and never mutates it. New filters and aggregations layer on the secondary query, never inside the verified base.
+
+</details>
+
+<details>
+<summary><strong>Does it work with Supabase, Neon, AWS RDS, Azure, or Google Cloud SQL?</strong></summary>
+
+<br/>
+
+Yes. The skill format is database-shape-agnostic — any standard PostgreSQL 12+ instance works. Shipped managed-Postgres connectors:
+
+- **AWS RDS for PostgreSQL** — direct connection or via VPC peering
+- **Azure Database for PostgreSQL** — flexible server + single server
+- **Google Cloud SQL for PostgreSQL** — Cloud SQL Proxy supported
+- **Neon** — serverless Postgres works as-is
+- **Supabase** — pooler port (6543) works; transaction-mode poolers tested
+- **Self-hosted PostgreSQL** — any instance reachable from the agent's egress
+
+PgBouncer (transaction or session mode) and other connection poolers are supported. Read replicas are encouraged for production.
+
+</details>
+
+<details>
+<summary><strong>How do I add a new verified Claude Skill?</strong></summary>
+
+<br/>
+
+Two steps:
+
+1. Create the folder: `.claude/skills/<department>/<role>/scripts/<skill-id>/`
+2. Drop two files into it:
+   - `query.sql` — the verified read-only SELECT (canonical, never mutated at runtime)
+   - `README.md` — the semantic layer (business question, result table, dos/don'ts, per-column details, value samples)
+
+Re-export from Chion Studio after verification, OR hand-edit the folder and the role's `SKILL.md` Scripts Index will pick up the new skill on the next agent load. Both paths produce identical structure.
+
+For production teams: use [chion.ai/chion-md](https://chion.ai/chion-md) — Chion auto-generates skills from your verified questions. The semantic pipeline distills queries into the same folder shape.
+
+</details>
+
+<details>
+<summary><strong>Can I use this with Cursor or Codex, not just Claude Code?</strong></summary>
+
+<br/>
+
+Yes. The repo ships **one** root agent file: `CHION.md`. Every major AI tool reads its own preferred filename, but the content is byte-identical:
+
+- **Claude Code** — symlink `CHION.md` → `CLAUDE.md`
+- **OpenAI Codex** — symlink `CHION.md` → `AGENTS.md`
+- **Cursor (legacy)** — copy `CHION.md` → `.cursorrules`
+- **Cursor (modern)** — copy `CHION.md` → `.cursor/rules/chion.mdc`
+
+The skill cascade beneath `.claude/skills/` is navigated by `CHION.md`'s manual routing (per its §2 + §3) rather than native skill auto-discovery, because the workspace nests roles under departments — a shape native flat skill loaders don't walk on their own.
+
+</details>
+
+<details>
+<summary><strong>Do I need to be on Chion's paid tier to use this repo?</strong></summary>
+
+<br/>
+
+No. This repository is MIT-licensed and free to use, fork, modify, and ship in commercial products. The published mock (Northwind Logistics) demonstrates the export shape; you can hand-edit it or generate your own from your database via [chion.ai/chion-md](https://chion.ai/chion-md).
+
+Chion's paid tiers are for the *generation* service — connecting to your live Postgres, running the semantic pipeline, and auto-promoting verified queries. The output (this folder shape) is open. If you want to hand-author skills following the same convention, that's free forever.
+
+</details>
+
+<details>
+<summary><strong>How does this compare to writing CLAUDE.md by hand?</strong></summary>
+
+<br/>
+
+Hand-written `CLAUDE.md` files are static prose — they describe your repo conventions but don't ground the agent in your actual database schema, verified queries, or runtime guardrails. Chion-exported `CHION.md` (and its CLAUDE.md mirror) is:
+
+- **Auto-generated from verified queries** — no manual taxonomy work
+- **Schema-anchored** — every column reference traces to your real Postgres schema
+- **Auditable** — every answer cites the verified script that produced it
+- **Re-compilable** — diff across releases the same way you diff code
+- **Multi-tool** — same content for Claude Code, Codex, and Cursor
+
+Hand-written CLAUDE.md works for repo-context grounding. Chion-exported skills work for analytics-grade SQL where verification matters.
+
+</details>
+
+<details>
+<summary><strong>Does Chion respect Row-Level Security and read replicas?</strong></summary>
+
+<br/>
+
+Yes — RLS is honored end-to-end on every query. If a row is hidden from the connecting role, it is hidden from Chion. Recommended setup:
+
+1. Create a dedicated read-only role with `CONNECT` on the database, `USAGE` on schemas, and `SELECT` on the tables Chion can query.
+2. Apply your RLS policies to that role. Chion respects them automatically.
+3. Point Chion at a **read replica** for production. Read-only SELECTs map perfectly to a replica endpoint: zero write risk, offloaded compute, no impact on transactional workloads.
+
+The connection uses TLS (`sslmode=require`); credentials are AES-256-GCM encrypted in a vault and loaded into memory only at connection time (Load-Consume-Purge pattern).
+
+</details>
+
+<details>
+<summary><strong>Does the LLM see my actual data rows?</strong></summary>
+
+<br/>
+
+No. The LLM receives only **schema metadata** (table names, column names, types, foreign keys) and **controlled column summaries** (top-N value samples for categorical columns; never raw rows from numeric or PII-flagged columns).
+
+Chion's pre-designed analytic strategies use the LLM to *propose* SQL bound to a typed contract; your database executes the SQL; results render server-side and are discarded when the session ends. The model never touches actual customer rows.
+
+Provider terms for paid commercial API tiers (Anthropic, OpenAI, Google, Mistral) prohibit training on customer inputs. No data retention beyond the session.
+
+</details>
 
 ---
 
