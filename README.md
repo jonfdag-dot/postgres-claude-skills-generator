@@ -18,8 +18,8 @@
   <em>Free to generate · read-only Postgres · 2-minute compile</em>
 </p>
 
-<!-- Demo video — drop-in for chion.ai-deployed README; on github.com replace src with a user-attachments/assets/* URL by drag-dropping the .mov into a GitHub Issue/PR comment. -->
-<video src="https://chion.ai/assets/skills-demo.mov" controls muted loop playsinline width="100%"></video>
+<!-- Demo video — GitHub user-attachments URL renders natively on github.com README. -->
+<video src="https://github.com/user-attachments/assets/750c0698-9e0d-4dff-a7e9-de02daed00ca" controls muted loop playsinline width="100%"></video>
 
 <br/>
 
@@ -381,13 +381,13 @@ The skill cascade beneath `.claude/skills/` is navigated by `CHION.md`'s manual 
 
 To **generate your own** workspace from your live Postgres database, Chion offers:
 
-- **10-day free trial** — no credit card. Connect Postgres, ask questions, verify answers, export.
-- **Starter** — $29/mo (50 verified questions/month)
-- **Pro** — $99/mo (250 verified questions/month)
-- **Max** — $299/mo (750 verified questions/month)
-- **Enterprise** — custom; multi-employee tree, leader-review page, per-role table whitelists
+- **10-day free trial** — no credit card. Connect Postgres, ask questions, verify answers.
+- **Starter** — $29/mo. **3 questions/hour.** `CHION.md` export only (the agent-contract file).
+- **Pro** — $99/mo. **10 questions/hour.** `CHION.md` export only.
+- **Max** — $299/mo. **Unlimited questions.** Full `CHION.md` + **Skills export** (this folder shape — `.claude/skills/` with verified `query.sql` + `README.md` per skill).
+- **Enterprise** — custom. Unlimited questions + Skills export + multi-employee tree + leader-review page + per-role RLS-aligned table whitelists + frontmatter overrides.
 
-The *generation service* is what the paid tiers cover — connecting to your live database, running the semantic pipeline, auto-promoting verified queries. The *output format* (this folder shape, `CHION.md`, `SKILL.md`) is open. Hand-authoring skills in the same convention is free forever.
+The *generation service* is what the paid tiers cover — connecting to your live database, running the semantic pipeline, auto-promoting verified queries. **Skills export (this folder shape) is gated to Max and Enterprise tiers.** Starter and Pro can export the `CHION.md` agent contract for use in Claude Code / Codex / Cursor, but skill auto-generation into the `.claude/skills/` cascade requires Max+. The *output format itself* (`CHION.md`, `SKILL.md`, the cascade convention) is open — hand-authoring skills following this convention is free forever.
 
 </details>
 
