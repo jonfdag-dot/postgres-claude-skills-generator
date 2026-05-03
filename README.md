@@ -2,13 +2,6 @@
 
 <br/>
 
-<!-- HERO BANNER — replace src with your animated cover (recommended: 1280×640 APNG/GIF, ≤5MB, hosted on chion.ai CDN). Until the asset ships, the static logo below renders. -->
-<a href="https://chion.ai/chion-md">
-  <img src="https://chion.ai/chion-logo-light.png" width="96" alt="Chion Skills Generator for Postgres SQL Database" />
-</a>
-
-<br/><br/>
-
 <p>
   <sub><strong>POSTGRES&nbsp;SQL&nbsp;SKILLS&nbsp;·&nbsp;FREE&nbsp;GENERATOR</strong></sub>
 </p>
@@ -32,36 +25,27 @@
 
 <br/>
 
-<p>
-  <a href="https://chion.ai">chion.ai</a>
-  &nbsp;·&nbsp;
-  <a href="https://chion.ai/contact">Talk to us</a>
-  &nbsp;·&nbsp;
-  <a href="https://github.com/jonfdag-dot/postgres-claude-skills-generator">GitHub</a>
-  &nbsp;·&nbsp;
-  <a href="LICENSE">MIT License</a>
-</p>
-
-<br/>
-
-<!-- Primary social row — brand + founder credibility -->
+<!-- Single social row — always-render shields.io badges -->
 <p>
   <a href="https://chion.ai">
     <img src="https://img.shields.io/badge/Visit-chion.ai-c97d4a?style=for-the-badge&logo=postgresql&logoColor=white" alt="Visit chion.ai" />
   </a>
   &nbsp;
-  <a href="https://www.linkedin.com/in/jonathan-dag/">
-    <img src="https://img.shields.io/badge/Founder-Jonathan%20Dag-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Founder — Jonathan Dag on LinkedIn" />
+  <a href="https://www.linkedin.com/company/chion-ai">
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
-</p>
-
-<!-- Secondary social row — small icons -->
-<p>
-  <a href="https://www.linkedin.com/company/chion-ai" aria-label="Chion on LinkedIn"><img src="https://chion.ai/social/linkedin.png" alt="LinkedIn" width="22" height="22" /></a>
-  &nbsp;&nbsp;
-  <a href="https://twitter.com/chionanalytics" aria-label="Chion on X"><img src="https://chion.ai/social/x-black.png#gh-light-mode-only" alt="X" width="22" height="22" /><img src="https://chion.ai/social/x-white.png#gh-dark-mode-only" alt="X" width="22" height="22" /></a>
-  &nbsp;&nbsp;
-  <a href="https://www.youtube.com/@chionai" aria-label="Chion on YouTube"><img src="https://chion.ai/social/youtube.png" alt="YouTube" width="22" height="22" /></a>
+  &nbsp;
+  <a href="https://twitter.com/chionanalytics">
+    <img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="X" />
+  </a>
+  &nbsp;
+  <a href="https://www.youtube.com/@chionai">
+    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube" />
+  </a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/jonathan-dag/">
+    <img src="https://img.shields.io/badge/Founder-Jonathan%20Dag-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Founder — Jonathan Dag" />
+  </a>
 </p>
 
 <br/>
