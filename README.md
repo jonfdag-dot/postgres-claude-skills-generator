@@ -6,7 +6,7 @@
   <sub><strong>POSTGRES&nbsp;SQL&nbsp;SKILLS&nbsp;·&nbsp;FREE&nbsp;GENERATOR</strong></sub>
 </p>
 
-<h1>Postgres SQL Agent Skills for Claude Code, Cursor &amp; Codex — Verified, Auditable, Open Source</h1>
+<h1>Postgres SQL Agent Skills for Claude Code, Cursor &amp; Codex </h1>
 
 <p>
   <strong>Automatically generate verified Postgres SQL skills that prevent AI hallucinations in Claude Code, Cursor, and Codex. This workspace converts trusted queries into auditable, RLS-aware agent skills — free, MIT-licensed, deterministic.</strong>
